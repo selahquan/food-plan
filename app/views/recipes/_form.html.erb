@@ -1,0 +1,41 @@
+<%= form_for @recipe do |f| %>
+
+    <% if @recipe.errors.any? %>
+    <div id="errors">
+        <% @recipe.errors.full_messages.each do |msg| %>
+            <div class="alert"><%= msg %></div>
+        <% end %>
+    </div>
+    <% end %>
+    
+    <%= render partial: "layouts/errors", locals: {record: @recipe} %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.label :category %>
+    <%= f.text_field :category %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :recipe_ingrident %>
+    <%= f.text_field :recipe_ingrident %>
+    <%= f.label :instructions %>
+    <%= f.text_field :instructions %>
+
+    <%= f.submit "Add Recipe!" %>
+
+<% end %>
