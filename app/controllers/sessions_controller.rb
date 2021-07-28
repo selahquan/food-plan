@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-    #before_action :redirect_if_logged_in, only: [:new]
+    before_action :redirect_if_logged_in, only: [:new]
     
 
     def login
@@ -17,10 +17,21 @@ class SessionsController < ApplicationController
     end
 
     def logout
-        session.clear
+        session[:user_id] = nil
         redirect_to new_user_path, notice: "Logged out"
     end
 
+    def google_omniauth
+        user_info = auth
+        user = Guest.o_auth_find_info(user_info)
+        user_session_or_redirect(user)
+    end
+    
+protected
+    
+    def auth
+        request.env['omniauth.auth']["info"]
+    end
 end
 
 private

@@ -3,3 +3,5 @@
         <%= link_to recipe.title, recipe, class: "recipe-info" %>
     </h2>
 <% end %>
+
+<h2><%= button_to "Add New Recipe", new_recipe_path, method: :get %></h2>
