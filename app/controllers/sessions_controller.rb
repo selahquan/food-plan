@@ -27,11 +27,11 @@ class SessionsController < ApplicationController
         user_session_or_redirect(user)
     end
     
-protected
+#protected
     
-    def auth
-        request.env['omniauth.auth']["info"]
-    end
+#    def auth
+#        request.env['omniauth.auth']["info"]
+#    end
 end
 
 private

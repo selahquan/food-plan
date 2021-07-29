@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
     
+    helper_method :current_user, :logged_in?
     #before_action :authenticate_user!, except: [:index, :show]
 
     def index
