@@ -1,0 +1,17 @@
+<tr class="nested-fields">
+	<td>
+		<div class="select"> 
+			<%= f.collection_select :ingredient_id, Ingredient.all, :id, :name%>
+		</div>			
+	</td>
+	<td>
+		<%= f.text_field :quantity, class:"input" %>
+	</td>
+
+	<% if f.object.persisted? %>
+		<td>
+			<%= f.hidden_field :_destroy %>
+			<%= link_to "Remove", '#', class: "remove_fields delete is-danger" %>
+		</td>	
+    <% end %>
+</tr>

@@ -1,6 +1,6 @@
 class GroceryListItem < ApplicationRecord
     
     belongs_to :grocery_list
-    belongs_to :ingridient
+    belongs_to :ingredient
 
 end

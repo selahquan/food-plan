@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_28_224552) do
+ActiveRecord::Schema.define(version: 2021_07_30_181657) do
 
   create_table "apis", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 2021_07_28_224552) do
   create_table "grocery_list_items", force: :cascade do |t|
     t.string "name"
     t.string "amount"
-    t.integer "grocery_list_id"
-    t.integer "recipe_id"
+    t.integer "grocery_list_id", null: false
+    t.integer "recipe_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grocery_list_id"], name: "index_grocery_list_items_on_grocery_list_id"
@@ -34,21 +34,21 @@ ActiveRecord::Schema.define(version: 2021_07_28_224552) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "ingridents", force: :cascade do |t|
+  create_table "ingredients", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "recipe_ingridients", force: :cascade do |t|
+  create_table "recipe_ingredients", force: :cascade do |t|
     t.string "amount"
     t.string "unit_of_measure"
-    t.integer "ingredient_id"
-    t.integer "recipe_id"
+    t.integer "ingredient_id", null: false
+    t.integer "recipe_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["ingredient_id"], name: "index_recipe_ingridients_on_ingredient_id"
-    t.index ["recipe_id"], name: "index_recipe_ingridients_on_recipe_id"
+    t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
+    t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 2021_07_28_224552) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "api_id"
     t.integer "user_id", null: false
+    t.string "imageType"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
@@ -71,5 +72,9 @@ ActiveRecord::Schema.define(version: 2021_07_28_224552) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "grocery_list_items", "grocery_lists"
+  add_foreign_key "grocery_list_items", "recipes"
+  add_foreign_key "recipe_ingredients", "ingredients"
+  add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "users"
 end

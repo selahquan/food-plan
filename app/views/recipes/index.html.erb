@@ -2,6 +2,14 @@
     <h2>
         <%= link_to recipe.title, recipe, class: "recipe-info" %>
     </h2>
+
+    <ul>
+        <% recipe.recipe_ingredients.each do |recipe_ingredient| %>
+            <li>
+                <%= recipe_ingredient.amount %> " " <%= recipe_ingredient.unit_of_measure%> " " <%= recipe_ingredient.ingredient.name %>
+            </li>
+        <% end %>
+    </ul>
 <% end %>
 
 <h2><%= button_to "Add New Recipe", new_recipe_path, method: :get %></h2>

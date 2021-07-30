@@ -13,12 +13,12 @@
     <%= f.text_field :title %>
     <%= f.label :category %>
     <%= f.text_field :category %>
-    <%= f.label :recipe_ingrident %>
-    <%= f.text_field :recipe_ingrident %>
-    <%= f.label :recipe_ingrident %>
-    <%= f.text_field :recipe_ingrident %>
-    <%= f.label :recipe_ingrident %>
-    <%= f.text_field :recipe_ingrident %>
+
+    <%= recipe_form.fields_for :recipe_ingredients do |recipe_ingredient_form| %>
+        <%= recipe_ingredients_form.text_field :amount, placeholder: "Amount" %>
+    <% end %>
+    <%= f.label :ingredient %>
+    <%= f.text_field :recipe_ingredient %>
     <%= f.label :instructions %>
     <%= f.text_field :instructions %>
 
