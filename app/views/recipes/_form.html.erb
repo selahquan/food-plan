@@ -1,4 +1,4 @@
-<%= form_for @recipe do |f| %>
+<%= form_with model: @recipe do |f| %>
 
     <% if @recipe.errors.any? %>
     <div id="errors">
@@ -10,18 +10,28 @@
     
     <%= render partial: "layouts/errors", locals: {record: @recipe} %>
     <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, placeholder: "Recipe Title" %>
+    <br>
+    <br>
     <%= f.label :category %>
-    <%= f.text_field :category %>
-
-    <%= recipe_form.fields_for :recipe_ingredients do |recipe_ingredient_form| %>
-        <%= recipe_ingredients_form.text_field :amount, placeholder: "Amount" %>
+    <%= f.text_field :category, placeholder: "Category" %>
+    <br>
+    <br>
+    <%= f.fields_for :ingredients do |i| %>
+        <%= i.label :ingredient %>
+        <%= i.text_field :name, placeholder: "Ingredient" %>
     <% end %>
-    <%= f.label :ingredient %>
-    <%= f.text_field :recipe_ingredient %>
+
+    <%= f.fields_for :recipe_ingredients do |g| %>
+        <%= g.text_field :amount, placeholder: "Amount" %>
+        <%= g.text_field :unit_of_measure, placeholder: "Unit of Measure" %>
+    <% end %>
+    <br>
+    <br>
     <%= f.label :instructions %>
     <%= f.text_field :instructions %>
-
+    <br>
+    <br>
     <%= f.submit "Add Recipe!" %>
 
 <% end %>

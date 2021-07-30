@@ -5,7 +5,8 @@ class Recipe < ApplicationRecord
     belongs_to :user
 
 
-    #validates :title, :category
+    validates_presence_of :title
+    validates_presence_of :category
 
     accepts_nested_attributes_for :recipe_ingredients
     accepts_nested_attributes_for :ingredients
