@@ -1,0 +1,2 @@
+module RecipeIngridientsHelper
+end

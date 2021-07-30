@@ -1,2 +1,0 @@
-class RecipeIngridentsController < ApplicationController
-end

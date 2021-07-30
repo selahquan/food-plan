@@ -1,2 +1,0 @@
-class IngridentsController < ApplicationController
-end
