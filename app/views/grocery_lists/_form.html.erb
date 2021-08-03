@@ -1,0 +1,33 @@
+<%= form_with model: @grocery_list do |f| %>
+
+    <% if @grocery_list.errors.any? %>
+    <div id="errors">
+        <% @grocery_list.errors.full_messages.each do |msg| %>
+            <div class="alert"><%= msg %></div>
+        <% end %>
+    </div>
+    <% end %>
+    
+    <%= render partial: "layouts/errors", locals: {record: @grocery_list} %>
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Grocery List Name" %>
+    <br>
+    <br>
+    <%= f.fields_for :recipes do |r| %>
+        <%= r.label :recipe %>
+        <%= r.collection_select :recipe_id, Recipe.all, :id, :title %>
+    <% end %>
+
+    <%= f.fields_for :recipe_ingredients do |g| %>
+        <%= g.text_field :amount, placeholder: "Amount" %>
+        <%= g.text_field :unit_of_measure, placeholder: "Unit of Measure" %>
+    <% end %>
+    <br>
+    <br>
+    <%= f.label :instructions %>
+    <%= f.text_field :instructions %>
+    <br>
+    <br>
+    <%= f.submit "Add Recipe!" %>
+
+<% end %>

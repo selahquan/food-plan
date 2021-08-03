@@ -24,7 +24,7 @@ class Api < ApplicationRecord
         
     end
 
-    def get_recipe
+    def self.get_recipe
         Api.complexSearch["results"].each{|k| k["title"]}.map{|v| v}
     end
 end

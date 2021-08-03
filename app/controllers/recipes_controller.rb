@@ -14,16 +14,17 @@ class RecipesController < ApplicationController
 
     def new
         @recipe = Recipe.new
-        @recipe.recipe_ingredients.build
-        @recipe.ingredients.build
+        @recipe.ingredients = Ingredient.new
+        @recipe.recipe_ingredients = RecipeIngredient.new
+        
     end
 
     def create
         @recipe = Recipe.new(recipe_params)
         @recipe.user_id = current_user.id
-        #@recipe.ingredient = Recipe.ingredients.build(recipe_params[:ingredient])
     if !@recipe.title.blank? || !@recipe.category.blank?
         @recipe.save
+        
     end
         if @recipe.save
             redirect_to @recipe, notice: "Successfully created new recipe"
@@ -57,5 +58,5 @@ end
 private
 
     def recipe_params
-        params.require(:recipe).permit(:title, :instructions, :category, recipe_ingredients: [:amount, :unit_of_measure], ingredients: [:name])
+        params.require(:recipe).permit(:title, :instructions, :category, recipe_ingredients_attributes: [:amount, :unit_of_measure], ingredients_attributes: [:name])
     end

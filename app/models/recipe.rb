@@ -7,6 +7,8 @@ class Recipe < ApplicationRecord
 
     validates_presence_of :title
     validates_presence_of :category
+    validates_uniqueness_of :title
+
 
     accepts_nested_attributes_for :recipe_ingredients
     accepts_nested_attributes_for :ingredients
