@@ -14,13 +14,15 @@ class RecipesController < ApplicationController
 
     def new
         @recipe = Recipe.new
-        @recipe.ingredients = Ingredient.new
-        @recipe.recipe_ingredients = RecipeIngredient.new
+        @recipe.ingredient = Ingredient.new
+        @recipe.recipe_ingredient = RecipeIngredient.new
         
     end
 
     def create
         @recipe = Recipe.new(recipe_params)
+        @recipe.ingredient = Ingredient.new(recipe_params[:ingredient_attributes])
+        @recipe.recipe_ingredient = RecipeIngredient.new(recipe_params[:recipe_ingredient_attributes])
         @recipe.user_id = current_user.id
     if !@recipe.title.blank? || !@recipe.category.blank?
         @recipe.save
@@ -58,5 +60,9 @@ end
 private
 
     def recipe_params
-        params.require(:recipe).permit(:title, :instructions, :category, recipe_ingredients_attributes: [:amount, :unit_of_measure], ingredients_attributes: [:name])
+        params.require(:recipe).permit(
+            :title, :instructions, :category, 
+            recipe_ingredient_attributes: [:amount, :unit_of_measure], 
+            ingredient_attributes: [:name]
+        )
     end

@@ -17,12 +17,12 @@
     <%= f.text_field :category, placeholder: "Category" %>
     <br>
     <br>
-    <%= f.fields_for :ingredients do |i| %>
+    <%= f.fields_for :ingredient do |i| %>
         <%= i.label :ingredient %>
         <%= i.text_field :name, placeholder: "Ingredient" %>
     <% end %>
 
-    <%= f.fields_for :recipe_ingredients do |g| %>
+    <%= f.fields_for :recipe_ingredient do |g| %>
         <%= g.text_field :amount, placeholder: "Amount" %>
         <%= g.text_field :unit_of_measure, placeholder: "Unit of Measure" %>
     <% end %>
