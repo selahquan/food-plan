@@ -1,0 +1,17 @@
+<%= form_with model: @recipe do |f| %>
+    <% if @ingredient.errors.any? %>
+        <div id="errors">
+            <% @recipe_ingredient.errors.full_messages.each do |msg| %>
+                <div class="alert"><%= msg %></div>
+            <% end %>
+        </div>
+    <% end %>
+    
+    <%= render partial: "layouts/errors", locals: {record: @ingredient} %>
+
+    <%= f.fields_for :recipe_ingredient do |f| %>
+        <%= f.text_field :amount, placeholder: "Amount" %>
+        <%= f.text_field :unit_of_measure, placeholder: "Unit of Measure" %>
+    <% end %>
+
+<% end %>

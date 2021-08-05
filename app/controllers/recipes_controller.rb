@@ -10,28 +10,33 @@ class RecipesController < ApplicationController
 
     def show
         @recipe = Recipe.find(params[:id])
-    end
+        #@recipe.ingredient = Ingredient.find(params[:id])
 
+    end
+    
     def new
         @recipe = Recipe.new
-        @recipe.ingredient = Ingredient.new
-        @recipe.recipe_ingredient = RecipeIngredient.new
+        @recipe_ingredients = @recipe.recipe_ingredients.build
+        #@ingredient = @recipe_ingredients.ingredient.build
+        
         
     end
 
     def create
         @recipe = Recipe.new(recipe_params)
+        @recipe.user_id = current_user.id
         @recipe.ingredient = Ingredient.new(recipe_params[:ingredient_attributes])
         @recipe.recipe_ingredient = RecipeIngredient.new(recipe_params[:recipe_ingredient_attributes])
-        @recipe.user_id = current_user.id
+        
     if !@recipe.title.blank? || !@recipe.category.blank?
         @recipe.save
         
     end
         if @recipe.save
-            redirect_to @recipe, notice: "Successfully created new recipe"
+            redirect_to recipe_path(@recipe), notice: "Successfully created new recipe"
         else
-            render 'new'
+            redirect_to new_recipe_path
+            #render 'new'
         end
     end
 
@@ -62,7 +67,7 @@ private
     def recipe_params
         params.require(:recipe).permit(
             :title, :instructions, :category, 
-            recipe_ingredient_attributes: [:amount, :unit_of_measure], 
-            ingredient_attributes: [:name]
+            recipe_ingredients_attributes: [:amount, :unit_of_measure],
+            ingredients_attributes: [:name]
         )
     end
