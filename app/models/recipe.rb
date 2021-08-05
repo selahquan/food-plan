@@ -1,8 +1,8 @@
 class Recipe < ApplicationRecord
     
     belongs_to :user
-    has_many :recipe_ingredients, inverse_of: :recipe
-    has_many :ingredients, through: :recipe_ingredients
+    has_many :recipe_ingredients
+    has_many :ingredients, through: :recipe_ingredient
     
 
 
@@ -11,19 +11,13 @@ class Recipe < ApplicationRecord
     validates_uniqueness_of :title
 
 
-    accepts_nested_attributes_for :recipe_ingredients
-    accepts_nested_attributes_for :ingredients
+    accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
 
-    # def recipe_ingredients_attributes=(a)
-    #     self.recipe_ingredients = RecipeIngredient.create(a)
-    #     self.recipe_ingredients.update(a)
-    #     # a.values.each do |i|
+    before_save :find_or_create_ingredients
 
-    #     #     recipe_ingredients.build(i)
-    #     # end
-    # end
-
-    def ingredients_attributes=(hash)
-        self.ingredient = Ingredient.find_or_create_by(hash)
+    def find_or_create_ingredients
+        self.recipe_ingredients.each do |recipe_ingredient|
+        recipe_ingredient.ingredient = Ingredient.find_or_create_by(name: recipe_ingredient.ingredient.name)
+        end
     end
 end

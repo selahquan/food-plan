@@ -1,0 +1,19 @@
+<div class="nested-fields">
+
+    <div class="ingredients">
+        <%= f.fields_for :ingredient do |ingredients| %>
+            <%= render "ingredient_fields", f: ingredients %>
+        <% end %>
+    </div>
+<br>
+    <div>
+        <%= f.label :amount %>
+        <%= f.text_field :amount %>
+        <%= f.label :unit_of_measure %>
+        <%= f.text_field :unit_of_measure, placeholder: "Unit of Measure" %>
+    </div>
+
+    
+
+    <%= link_to_remove_association "remove ingredient", f %>
+</div>
