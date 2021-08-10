@@ -2,7 +2,8 @@ class Recipe < ApplicationRecord
     
     belongs_to :user
     has_many :recipe_ingredients
-    has_many :ingredients, through: :recipe_ingredient
+    has_many :ingredients, through: :recipe_ingredients
+    
     
 
 
@@ -20,4 +21,6 @@ class Recipe < ApplicationRecord
         recipe_ingredient.ingredient = Ingredient.find_or_create_by(name: recipe_ingredient.ingredient.name)
         end
     end
+
+
 end
