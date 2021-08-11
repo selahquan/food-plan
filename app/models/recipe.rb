@@ -3,6 +3,7 @@ class Recipe < ApplicationRecord
     belongs_to :user
     has_many :recipe_ingredients
     has_many :ingredients, through: :recipe_ingredients
+    has_many :grocery_lists
     
     
 
@@ -22,7 +23,9 @@ class Recipe < ApplicationRecord
         end
     end
 
-    scope :search,-> (title){where("title LIKE ?", "%#{title}%")}
+    def created_by
+        User.where(user_id: self.id)
+    end
 
 
 

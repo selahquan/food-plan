@@ -28,6 +28,7 @@ gem 'http'
 
 gem "cocoon"
 
+gem 'omniauth-google-oauth2'
 
 gem 'activeresource'
 

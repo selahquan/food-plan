@@ -6,6 +6,7 @@ class Ingredient < ApplicationRecord
     has_many :recipes, through: :recipe_ingredients
     has_many :grocery_list_items
     
+    scope :search,-> (name){where("name LIKE ?", "%#{name}%")}
 
     scope :popular_ingredients, -> {
         left_joins(:recipe_ingredient)
