@@ -22,5 +22,8 @@ class Recipe < ApplicationRecord
         end
     end
 
+    scope :search,-> (title){where("title LIKE ?", "%#{title}%")}
+
+
 
 end
