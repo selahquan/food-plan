@@ -21,11 +21,15 @@ class SessionsController < ApplicationController
         redirect_to new_user_path, notice: "Logged out"
     end
 
-    def google_omniauth
-        user_info = auth
+    def omniauth
+        user = User.find_or_create_by(uid: request.env['omniauth.auth'][:provider], provider: request.env['onmiauth.auth'][:uid]) do |u|
+            u.username =
+            u.email =
+            u.password = 
         user = Guest.o_auth_find_info(user_info)
         user_session_or_redirect(user)
     end
+
     
 #protected
     

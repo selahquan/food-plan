@@ -27,6 +27,7 @@ class Recipe < ApplicationRecord
         User.where(user_id: self.id)
     end
 
+    scope :alpha, -> {order('title')}
 
 
 end

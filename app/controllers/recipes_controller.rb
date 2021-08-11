@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
     #before_action :authenticate_user!, except: [:index, :show]
 
     def index
-        @recipe = Recipe.all
+        @recipe = Recipe.alpha
     end
 
     def show
