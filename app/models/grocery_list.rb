@@ -4,11 +4,14 @@ class GroceryList < ApplicationRecord
     has_many :ingredients, through: :grocery_list_items
     has_many :recipes
 
-    def self.grocery_list
-        
-
-
+    def all_ingredients
+        recipes.joins(:ingredients)
+            .joins(:recipe_ingredients)
+            .select("ingredients.name AS name, recipe_ingredients.amount AS amount, recipe_ingredients.unit_of_measure AS unit of measure")
+            .order("name ASC")
+            .distinct
     end
+
     def get_user_recipe_names
         current_user.recipes.map {|r| r.title }
     end

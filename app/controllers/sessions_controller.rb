@@ -6,6 +6,11 @@ class SessionsController < ApplicationController
 
     end
 
+    def logout
+        session[:user_id] = nil
+        redirect_to new_user_path, notice: "Logged out"
+    end
+
     def create
         user = User.find_by_username(params[:username])
         if user && user.authenticate(params[:password])
@@ -16,18 +21,20 @@ class SessionsController < ApplicationController
             redirect_to login_path
     end
 
-    def logout
-        session[:user_id] = nil
-        redirect_to new_user_path, notice: "Logged out"
-    end
+    
 
     def omniauth
         user = User.find_or_create_by(uid: request.env['omniauth.auth'][:provider], provider: request.env['onmiauth.auth'][:uid]) do |u|
-            u.username =
-            u.email =
-            u.password = 
-        user = Guest.o_auth_find_info(user_info)
-        user_session_or_redirect(user)
+            u.username = request.env['omniauth.auth'][:info][:first_name]
+            u.email = request.env['omniauth.auth'][:info][:email]
+            u.password = SecureRandom.hex(15)
+        end
+        if user.valid?
+            session[:user_id] = user.id
+            redirect_to root_path
+        else
+            redirect_to login_path
+        end
     end
 
     
