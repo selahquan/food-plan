@@ -1,10 +1,12 @@
 class RecipesController < ApplicationController
     
     helper_method :current_user, :logged_in?
-    #before_action :authenticate_user!, except: [:index, :show]
+    before_action :require_login
+    skip_before_action :require_login, only: [:index, :show]
 
     def index
         @recipe = Recipe.alpha
+        #@ingredients = @recipe.ingredients
     end
 
     def show

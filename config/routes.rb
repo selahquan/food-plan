@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :recipes
+  resources :recipes do
+    resources :ingredients, only: [:show, :edit, :update, :destroy, :new]
+  end
   resources :grocery_list_items
   resources :grocery_lists
   resources :ingridents
@@ -12,4 +14,6 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#login", as: "login"
   post "/login", to: "sessions#create"
   get '/auth/:provider/callback', to: 'sessions#omniauth'
+
+  root "sessions#login"
 end
