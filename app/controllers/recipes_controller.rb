@@ -19,14 +19,12 @@ class RecipesController < ApplicationController
         @recipe = Recipe.new(recipe_params)
         @recipe.user_id = current_user.id
         
-        #if !@recipe.title.blank? || !@recipe.category.blank?
+        if !@recipe.title.blank? || !@recipe.category.blank? || !@recipe.instructions.blank?
             @recipe.save
-        #end
-        if @recipe.save
-            redirect_to recipe_path(@recipe), notice: "Successfully created new recipe"
+            redirect_to recipe_path(@recipe), flash[:notice] = ["Successfully created new recipe"]
         else
+            flash[:errors] = "Recipe fields must not be blank!"
             redirect_to new_recipe_path
-            #render 'new'
         end
     end
 

@@ -15,10 +15,12 @@ class IngredientsController < ApplicationController
     def create
         @ingredient = Ingredient.new(ingredient_params)
 
-        if @ingredient.save
+        if !@ingredient.name.blank?
+            @ingredient.save
             redirect_to :ingredients
         else
-            render :new
+            flash[:errors] = "Ingredient name must not be blank!"
+            redirect_to new_ingredient_path
         end
     end
 
