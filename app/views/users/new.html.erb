@@ -1,4 +1,4 @@
-<h1>Mic Check</h1>
+<h1>Sign Up</h1>
 
 <%= form_for @user do |f| %>
     <%= render partial: "layouts/errors", locals: {record: @user} %>
@@ -13,15 +13,8 @@
 
     <%= f.submit "Sign Up!" %>
 
-<<<<<<< HEAD
 <% end %>
 
 <h3>Or sign in with Google</h3>
 
     <%= button_to "Google", '/auth/google_oauth2' %>
-=======
-<h3>Or login with Google</h3>
-
-<%= button_to 'Google', '/auth/google_oauth2' %>
-<% end %>
->>>>>>> 46aacad0e1644eaf3a3d34aed30cb5d6d04b7fee

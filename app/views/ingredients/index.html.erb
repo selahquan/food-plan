@@ -2,14 +2,8 @@
 <h3>All Ingredients so far</h3>
 <ul>
 <% @ingredients.each do |i| %>
-    <li> <%= link_to i.name, ingredient_path(ingredient) %> </li>
+    <%= link_to i.name, i, class: "recipe-info" %>
 <% end %>
 </ul>
 
 
-<div class="scope_search">
-<%= form_tag ingredients_path, method: :get do %>
-    <%= label_tag :search %>
-    <%= text_field_tag :search, @params[:search]%>
-    <%= submit_tag "Search" %>
-<% end %><br>

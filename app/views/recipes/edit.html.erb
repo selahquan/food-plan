@@ -1,0 +1,6 @@
+<h1>Edit Recipe</h1>
+
+<%= render partial: 'form', locals: {recipe: @recipe} %>
+<div class ="delete_button">
+    <%= button_to "Delete recipe", recipe_path(@recipe), method: :delete, data: { confirm: "Are you sure you want to delete this recipe?" } %>
+</div>

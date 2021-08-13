@@ -1,23 +1,33 @@
 class IngredientsController < ApplicationController
-    
+    before_action :set_ingredient, except: [:index, :new, :create]
+
     def index
-        @ingredients = Ingredient.all
+        if params[:recipe_id] && @recipe = Recipe.find_by(id: params[:recipe_id])
+            @ingredients = @recipe.ingredients
+        else 
+            @ingredients = Ingredient.all
+        end
     end
 
     def show
-        @ingredient = Ingredient.find(params[:id])
     end
 
     def new
         @ingredient = Ingredient.new
+        if params[:recipe_id]
+            @recipe = Recipe.find_by(id: params[:recipe_id])
+            @ingredients = @recipe.ingredients.build
+        else 
+            @ingredient = Ingredient.new
+            @ingredient.build_recipe
+        end
     end
 
     def create
         @ingredient = Ingredient.new(ingredient_params)
 
-        if !@ingredient.name.blank?
-            @ingredient.save
-            redirect_to :ingredients
+        if @ingredient.save
+            redirect_to :ingredients, flash[:notice] = ["Successfully created new recipe"]
         else
             flash[:errors] = "Ingredient name must not be blank!"
             redirect_to new_ingredient_path
@@ -25,28 +35,27 @@ class IngredientsController < ApplicationController
     end
 
     def edit
-		@ingredient = Ingredient.find(params[:id])
 	end
 
 	def update
-		@ingredient = Ingredient.find(params[:id])
-
 		if @ingredient.update(ingredient_params)
-		redirect_to @ingredient
+		    redirect_to @ingredient
 		else
-		render :edit
+		    render :edit
 		end
 	end  
 
 	def destroy
-		@ingredient = Ingredient.find(params[:id])
 		@ingredient.destroy
-
 		redirect_to recipe_path
 	end
 
     private
 		def ingredient_params
-		params.require(:ingredient).permit(:name)
+		params.require(:ingredient).permit(:name, :recipe_id)
 		end
+
+        def set_ingredient
+            @ingredient = Ingredient.find(params[:id])
+        end
 end

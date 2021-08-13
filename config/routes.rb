@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   resources :recipes do
-    resources :ingredients, only: [:show, :edit, :update, :destroy, :new]
+    resources :ingredients, only: [:show, :index, :new, :create]
   end
   resources :grocery_list_items
   resources :grocery_lists
-  resources :ingridents
-  resources :recipe_ingridents
+  resources :ingredients
+  resources :recipe_ingredients
   
   resources :users
 

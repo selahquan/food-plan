@@ -2,6 +2,7 @@ class RecipesController < ApplicationController
     
     helper_method :current_user, :logged_in?
     before_action :require_login
+    before_action :set_recipe, except: [:index, :new, :create]
     skip_before_action :require_login, only: [:index, :show]
 
     def index
@@ -10,7 +11,6 @@ class RecipesController < ApplicationController
     end
 
     def show
-        @recipe = Recipe.find(params[:id])
     end
     
     def new
@@ -21,9 +21,8 @@ class RecipesController < ApplicationController
         @recipe = Recipe.new(recipe_params)
         @recipe.user_id = current_user.id
         
-        if !@recipe.title.blank? || !@recipe.category.blank? || !@recipe.instructions.blank?
-            @recipe.save
-            redirect_to recipe_path(@recipe), flash[:notice] = ["Successfully created new recipe"]
+        if @recipe.save
+            redirect_to recipe_path, flash[:notice] = ["Successfully created new recipe"]
         else
             flash[:errors] = "Recipe fields must not be blank!"
             redirect_to new_recipe_path
@@ -31,12 +30,9 @@ class RecipesController < ApplicationController
     end
 
     def edit
-        @recipe = Recipe.find(params[:id])
     end
 
     def update
-        @recipe = Recipe.find(params[:id])
-    
         if @recipe.update(recipe_params)
             redirect_to @recipe
         else
@@ -45,9 +41,7 @@ class RecipesController < ApplicationController
     end
 
     def destroy
-        @recipe = Recipe.find(params[:id])
         @recipe.destroy
-    
         redirect_to recipes_path
     end
 end
@@ -59,4 +53,8 @@ private
             :title, :instructions, :category, 
             recipe_ingredients_attributes: [:amount, :unit_of_measure, :id, :_destroy, ingredient_attributes: [:name, :id]]
         )
+    end
+
+    def set_recipe
+        @recipe = Recipe.find(params[:id])
     end
