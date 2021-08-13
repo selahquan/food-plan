@@ -12,4 +12,13 @@
     </ul>
 <% end %>
 
+<div class="scope_search">
+<%= form_tag recipes_path, method: :get do %>
+    <%= label_tag :search %>
+    <%= text_field_tag :search, @params[:search]%>
+    <%= submit_tag "Search" %>
+<% end %><br>
+
+
+
 <h2><%= button_to "Add New Recipe", new_recipe_path, method: :get %></h2>

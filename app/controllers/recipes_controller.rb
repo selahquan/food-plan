@@ -6,8 +6,14 @@ class RecipesController < ApplicationController
     skip_before_action :require_login, only: [:index, :show]
 
     def index
-        @recipe = Recipe.alpha
-        #@ingredients = @recipe.ingredients
+        if params[:search]
+            @params = params.permit(:search).to_h
+            @recipe = Recipe.search(params[:search])
+        else  
+            @recipe = Recipe.alpha
+            @params = params.permit(:category, :title)
+            #@ingredients = @recipe.ingredients
+        end
     end
 
     def show
@@ -44,13 +50,14 @@ class RecipesController < ApplicationController
         @recipe.destroy
         redirect_to recipes_path
     end
+
 end
 
 private
 
     def recipe_params
         params.require(:recipe).permit(
-            :title, :instructions, :category, 
+            :title, :instructions, :category, :commit,
             recipe_ingredients_attributes: [:amount, :unit_of_measure, :id, :_destroy, ingredient_attributes: [:name, :id]]
         )
     end
